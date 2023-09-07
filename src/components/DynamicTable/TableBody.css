@@ -1,0 +1,23 @@
+
+input[type="text"] {
+    width: 90%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    height: 20px;
+  }
+  
+  /* Style the table rows and cells */
+  tbody tr:nth-child(odd) {
+    background-color: #f2f2f2;
+  }
+  
+  tbody tr:hover {
+    background-color: #ddd;
+  }
+  
+  tbody td {
+    padding: 8px;
+  }
+  
+ 
