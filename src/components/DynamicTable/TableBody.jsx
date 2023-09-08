@@ -1,38 +1,60 @@
 import React, { useState } from "react";
-import './TableBody.css'; 
+import "./TableBody.css";
+import { tableConfig } from "./common/config";
 
-function TableBody({ columns }) {
-  // Initialize state to store the user-entered text for each cell
-  const [cellData, setCellData] = useState([
-    "Data 1",
-    "Data 2",
-    "Data 3",
-    "Data 4",
-    "Data 5",
-  ]);
-
-  // Handle input change for a specific cell
-  const handleInputChange = (index, event) => {
-    const newData = [...cellData];
-    newData[index] = event.target.value;
-    setCellData(newData);
-  };
-
+const TableBody = () => {
   return (
-    <tbody>
-      <tr>
-        {columns.map((column, index) => (
-          <td key={index}>
-            <input
-              type="text"
-              value={cellData[index]}
-              onChange={(event) => handleInputChange(index, event)}
-            />
-          </td>
-        ))}
-      </tr>
-    </tbody>
+    <div className="Table-container">
+      <table>
+        <thead>
+          <tr>
+            {tableConfig.table.map(
+              (cell, index) =>
+                cell.type === "head" && (
+                  <th key={index} style={{ textAlign: cell.align }}>
+                    {cell.value}
+                  </th>
+                )
+            )}
+          </tr>
+        </thead>
+        <tbody>
+          {tableConfig.table.map(
+            (cell, index) =>
+              cell.type === "body" && (
+                <tr key={index}>
+                  <td style={{ textAlign: cell.align }}>{cell.value}</td>
+                  {cell.data.map((value, valueIndex) => (
+                    <td key={valueIndex} style={{ textAlign: cell.align }}>
+                      {value}
+                    </td>
+                  ))}
+                </tr>
+              )
+          )}
+        </tbody>
+        {tableConfig.table.map(
+          (cell, index) =>
+            cell.type === "foot" && (
+              <tfoot key={index}>
+                <tr>
+                  <td style={{ textAlign: cell.align }}>{cell.value}</td>
+                  {cell.data &&
+                    cell.data.map((average, avgIndex) => (
+                      <td
+                        key={avgIndex}
+                        style={{ textAlign: "left", color: "darkgreen" }}
+                      >
+                        {average}
+                      </td>
+                    ))}
+                </tr>
+              </tfoot>
+            )
+        )}
+      </table>
+    </div>
   );
-}
+};
 
 export default TableBody;
