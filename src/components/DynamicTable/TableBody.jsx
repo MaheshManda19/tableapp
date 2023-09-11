@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./TableBody.css";
 import { tableConfig } from "./common/config";
 
@@ -12,7 +12,11 @@ const TableBody = () => {
               (cell, index) =>
                 cell.type === "head" && (
                   <th key={index} style={{ textAlign: cell.align }}>
-                    {cell.value}
+                    {Array.isArray(cell.value)
+                      ? cell.value.map((header, headerIndex) => (
+                          <div key={headerIndex}>{header}</div>
+                        ))
+                      : cell.value}
                   </th>
                 )
             )}
@@ -23,12 +27,13 @@ const TableBody = () => {
             (cell, index) =>
               cell.type === "body" && (
                 <tr key={index}>
-                  <td style={{ textAlign: cell.align }}>{cell.value}</td>
-                  {cell.data.map((value, valueIndex) => (
-                    <td key={valueIndex} style={{ textAlign: cell.align }}>
-                      {value}
-                    </td>
-                  ))}
+                  {Array.isArray(cell.value)
+                    ? cell.value.map((value, valueIndex) => (
+                        <td key={valueIndex} style={{ textAlign: cell.align }}>
+                          {value}
+                        </td>
+                      ))
+                    : <td style={{ textAlign: cell.align }}>{cell.value}</td>}
                 </tr>
               )
           )}
@@ -38,16 +43,16 @@ const TableBody = () => {
             cell.type === "foot" && (
               <tfoot key={index}>
                 <tr>
-                  <td style={{ textAlign: cell.align }}>{cell.value}</td>
-                  {cell.data &&
-                    cell.data.map((average, avgIndex) => (
-                      <td
-                        key={avgIndex}
-                        style={{ textAlign: "left", color: "darkgreen" }}
-                      >
-                        {average}
-                      </td>
-                    ))}
+                  {Array.isArray(cell.value)
+                    ? cell.value.map((average, avgIndex) => (
+                        <td
+                          key={avgIndex}
+                          style={{ textAlign: "left", color: "darkgreen" }}
+                        >
+                          {average}
+                        </td>
+                      ))
+                    : <td style={{ textAlign: "left", color: "darkgreen" }}>{cell.value}</td>}
                 </tr>
               </tfoot>
             )

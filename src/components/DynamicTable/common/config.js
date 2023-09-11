@@ -44,39 +44,33 @@ export const tableConfig = {
     },
     {
       type: "body",
-      value: "Student 1",
+      value: ["Student 1", 85, 92, 78, 89],
       align: "left",
-      data: [85, 92, 78, 89],
     },
     {
       type: "body",
-      value: "Student 2",
+      value: ["Student 2", 90, 88, 76, 94],
       align: "left",
-      data: [90, 88, 76, 94],
     },
     {
       type: "body",
-      value: "Student 3",
+      value: ["Student 3", 78, 85, 90, 87],
       align: "left",
-      data: [78, 85, 90, 87],
     },
     {
       type: "body",
-      value: "Student 4",
+      value: ["Student 4", 92, 89, 76, 95],
       align: "left",
-      data: [92, 89, 76, 95],
     },
     {
       type: "body",
-      value: "Student 5",
+      value: ["Student 5", 87, 94, 85, 90],
       align: "left",
-      data: [87, 94, 85, 90],
     },
-    {
+     {
       type: "foot",
-      value: "Averages",
+      value: ["Averages", ...Averages],
       align: "left",
-      data: Averages, 
     },
   ],
 };
