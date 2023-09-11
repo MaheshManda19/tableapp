@@ -14,32 +14,11 @@ for (let i = 1; i <= 4; i++) {
   ][i - 1]; 
   Averages.push(calculateAverage(data).toFixed(2));
 }
-
 export const tableConfig = {
   table: [
     {
       type: "head",
-      value: "Student Name",
-      align: "left",
-    },
-    {
-      type: "head",
-      value: "Subject 1",
-      align: "left",
-    },
-    {
-      type: "head",
-      value: "Subject 2",
-      align: "left",
-    },
-    {
-      type: "head",
-      value: "Subject 3",
-      align: "left",
-    },
-    {
-      type: "head",
-      value: "Subject 4",
+      value: ["Student Name", "Subject 1", "Subject 2", "Subject 3", "Subject 4"],
       align: "left",
     },
     {
@@ -67,7 +46,7 @@ export const tableConfig = {
       value: ["Student 5", 87, 94, 85, 90],
       align: "left",
     },
-     {
+    {
       type: "foot",
       value: ["Averages", ...Averages],
       align: "left",
