@@ -1,8 +1,7 @@
-export const calculateAverage = (numbers) => {
+const calculateAverage = (numbers) => {
   const sum = numbers.reduce((acc, curr) => acc + curr, 0);
   return sum / numbers.length;
 };
-
 const Averages = [];
 for (let i = 1; i <= 4; i++) {
   const data = [
