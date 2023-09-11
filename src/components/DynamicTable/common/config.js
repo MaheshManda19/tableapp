@@ -5,11 +5,10 @@ const calculateAverage = (numbers) => {
 const Averages = [];
 for (let i = 1; i <= 4; i++) {
   const data = [
-    [85, 92, 78, 89],
-    [90, 88, 76, 94],
-    [78, 85, 90, 87],
-    [92, 89, 76, 95],
-    [87, 94, 85, 90]
+    [85, 90, 78, 92, 87],
+    [92, 88, 85, 89, 94],
+    [78, 76, 76, 85, 90],
+    [89, 87, 94, 90, 95],
   ][i - 1]; 
   Averages.push(calculateAverage(data).toFixed(2));
 }
