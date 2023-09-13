@@ -2,21 +2,12 @@ const calculateAverage = (numbers) => {
   const sum = numbers.reduce((acc, curr) => acc + curr, 0);
   return sum / numbers.length;
 };
-const Averages = [];
-for (let i = 1; i <= 4; i++) {
-  const data = [
-    [85, 90, 78, 92, 87],
-    [92, 88, 85, 89, 94],
-    [78, 76, 76, 85, 90],
-    [89, 87, 94, 90, 95],
-  ][i - 1]; 
-  Averages.push(calculateAverage(data).toFixed(2));
-}
+
 export const tableConfig = {
   table: [
     {
       type: "head",
-      value: ["Student Name", "Subject 1", "Subject 2", "Subject 3", "Subject 4"],
+      value: ["Student Name", "Subject 1", "Subject 2", "Subject 3","Subject 4"],
       align: "left",
     },
     {
@@ -39,15 +30,33 @@ export const tableConfig = {
       value: ["Student 4", 92, 89, 76, 95],
       align: "left",
     },
+    
     {
       type: "body",
-      value: ["Student 5", 87, 94, 85, 90],
+      value: ["Student 5", 90 , 94, 85, 90,],
       align: "left",
     },
+    
     {
-      type: "foot",
-      value: ["Averages", ...Averages],
-      align: "left",
-    },
+      type:'foot',
+      value:[] || footerRow,
+      align:'left'
+
+    }
   ],
+
 };
+
+// Extract the subject data for calculating averages
+const subjectData = tableConfig.table
+  .filter((item) => item.type === "body")
+  .map((item) => item.value.slice(1));
+
+// Calculate averages for each subject
+const Averages = subjectData[0].map((_, columnIndex) =>
+  calculateAverage(subjectData.map((row) => row[columnIndex])).toFixed(2)
+);
+
+// Update the footer row in tableConfig with the calculated averages
+const footerRow = tableConfig.table.find((item) => item.type === "foot");
+footerRow.value = ["Averages", ...Averages];

@@ -1,40 +1,52 @@
 .Table-container {
-    text-align: center;
-    margin: 20px;
-    overflow-x: auto; 
-  }
-  
+  text-align: center;
+  margin: 20px;
+  overflow-x: auto;
+}
+
+.table-scroll {
+  overflow: auto;
+  max-height: 100vh;
+  max-width: 100%;
+  cursor:pointer;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+thead {
+  background-color: #f2f2f2;
+}
+
+th {
+  padding: 10px;
+  font-weight: bold;
+  border: 1px solid #ddd;
+}
+
+td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+@media screen and (max-width: 768px) {
   table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+    font-size: 12px;
   }
-  
-  thead {
-    background-color: #f2f2f2;
-  }
-  
-  th {
-    padding: 10px;
-    font-weight: bold;
-    border: 1px solid #ddd;
-  }
-  
+
+  th,
   td {
-    padding: 10px;
-    border: 1px solid #ddd;
+    padding: 8px;
   }
-  
-  button:hover {
-    background-color: #0056b3;
+
+  .table-scroll {
+    max-width: 100%;
   }
-  
-  @media screen and (max-width: 768px) {
-    table {
-      font-size: 12px; 
-    }
-    th, td {
-      padding: 8px; 
-    }
-  }
-  
+}

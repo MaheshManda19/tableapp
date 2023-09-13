@@ -5,6 +5,7 @@ import { tableConfig } from "./common/config";
 const TableBody = () => {
   return (
     <div className="Table-container">
+      <div className="table-scroll">
       <table>
         <thead>
           <tr>
@@ -68,6 +69,7 @@ const TableBody = () => {
             )
         )}
       </table>
+    </div>
     </div>
   );
 };
