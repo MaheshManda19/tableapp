@@ -66,3 +66,16 @@ button:hover {
   justify-content: center;
   align-items: center;
 }
+
+.search-box input {
+  padding: 5px 10px; 
+  border: 1px solid #ccc; 
+  border-radius: 5px; 
+  font-size: 14px; 
+}
+.search-box{
+  text-align: end;
+}
+
+
+

@@ -9,17 +9,31 @@ const TableBody = () => {
 
   const [entriesPerPage, setEntriesPerPage] = useState(5); // Default number of entries per page
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState(""); // State to store the search query
 
   if (headerData.length === 0 || bodyData.length === 0) {
     return <div>No data available</div>;
   }
 
-  const totalEntries = bodyData.length;
+ // Filter the bodyData based on the search query
+const filteredData = bodyData.filter((row) => {
+  // Customize this logic for your specific use case
+  return row.value.some((cell) => {
+    if (typeof cell === 'string' || typeof cell === 'number') {
+      const cellString = String(cell); // Convert non-string values to strings
+      return cellString.toLowerCase().includes(searchQuery.toLowerCase());
+    }
+    return false;
+  });
+});
+
+
+  const totalEntries = filteredData.length;
   const totalPages = Math.ceil(totalEntries / entriesPerPage);
 
   const getColumnData = (columnIndex) => {
     return {
-      value: bodyData.map((row) => row.value[columnIndex]),
+      value: headerData[columnIndex]?.value,
       align: headerData[columnIndex]?.align || "left",
     };
   };
@@ -30,7 +44,7 @@ const TableBody = () => {
 
   const handleEntriesPerPageChange = (e) => {
     setEntriesPerPage(parseInt(e.target.value));
-    setCurrentPage(1); // Reset to the first page when changing entries per page
+    setCurrentPage(1); 
   };
 
   const startIndex = (currentPage - 1) * entriesPerPage;
@@ -39,6 +53,15 @@ const TableBody = () => {
   return (
     <div className="Table-container">
       <h2 className="header">DynamicTable</h2>
+
+      <div className="search-box">
+      Search: <input
+          type="text"
+          placeholder="Search the Value"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </div>
 
       <div className="table-scroll">
         <label>
@@ -50,6 +73,7 @@ const TableBody = () => {
           </select>{" "}
           entries
         </label>
+
         <table>
           <thead>
             <tr>
@@ -61,14 +85,14 @@ const TableBody = () => {
             </tr>
           </thead>
           <tbody>
-            {bodyData.slice(startIndex, endIndex).map((row, rowIndex) => (
+            {filteredData.slice(startIndex, endIndex).map((row, rowIndex) => (
               <tr key={rowIndex}>
-                {row.value.map((_, columnIndex) => (
+                {row.value.map((cell, columnIndex) => (
                   <td
                     key={columnIndex}
                     style={{ textAlign: getColumnData(columnIndex).align }}
                   >
-                    {getColumnData(columnIndex).value[startIndex + rowIndex]}
+                    {cell}
                   </td>
                 ))}
               </tr>
