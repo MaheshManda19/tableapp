@@ -1,75 +1,107 @@
-import React from "react";
+import React, { useState } from "react";
 import "./TableBody.css";
 import { tableConfig } from "./common/config";
 
 const TableBody = () => {
+  const headerData = tableConfig.table[0]?.record || [];
+  const bodyData = tableConfig.table[1]?.record || [];
+  const footerData = tableConfig.table[0]?.record || [];
+
+  const [entriesPerPage, setEntriesPerPage] = useState(5); // Default number of entries per page
+  const [currentPage, setCurrentPage] = useState(1);
+
+  if (headerData.length === 0 || bodyData.length === 0) {
+    return <div>No data available</div>;
+  }
+
+  const totalEntries = bodyData.length;
+  const totalPages = Math.ceil(totalEntries / entriesPerPage);
+
+  const getColumnData = (columnIndex) => {
+    return {
+      value: bodyData.map((row) => row.value[columnIndex]),
+      align: headerData[columnIndex]?.align || "left",
+    };
+  };
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const handleEntriesPerPageChange = (e) => {
+    setEntriesPerPage(parseInt(e.target.value));
+    setCurrentPage(1); // Reset to the first page when changing entries per page
+  };
+
+  const startIndex = (currentPage - 1) * entriesPerPage;
+  const endIndex = startIndex + entriesPerPage;
+
   return (
     <div className="Table-container">
-      <div className="table-scroll">
-      <table>
-        <thead>
-          <tr>
-            {tableConfig.table
-              .filter((cell) => cell.type === "head")
-              .map((cell, index) =>
-                Array.isArray(cell.value) ? (
-                  cell.value.map((header, headerIndex) => (
-                    <th key={headerIndex} style={{ textAlign: cell.align }}>
-                      {header}
-                    </th>
-                  ))
-                ) : (
-                  <th key={index} style={{ textAlign: cell.align }}>
-                    {cell.value}
-                  </th>
-                )
-              )}
-          </tr>
-        </thead>
+      <h2 className="header">DynamicTable</h2>
 
-        <tbody>
-          {tableConfig.table.map(
-            (cell, index) =>
-              cell.type === "body" && (
-                <tr key={index}>
-                  {Array.isArray(cell.value) ? (
-                    cell.value.map((value, valueIndex) => (
-                      <td key={valueIndex} style={{ textAlign: cell.align }}>
-                        {value}
-                      </td>
-                    ))
-                  ) : (
-                    <td style={{ textAlign: cell.align }}>{cell.value}</td>
-                  )}
-                </tr>
-              )
-          )}
-        </tbody>
-        {tableConfig.table.map(
-          (cell, index) =>
-            cell.type === "foot" && (
-              <tfoot key={index}>
-                <tr>
-                  {Array.isArray(cell.value) ? (
-                    cell.value.map((average, avgIndex) => (
-                      <td
-                        key={avgIndex}
-                        style={{ textAlign: "left", color: "darkgreen" }}
-                      >
-                        {average}
-                      </td>
-                    ))
-                  ) : (
-                    <td style={{ textAlign: "left", color: "darkgreen" }}>
-                      {cell.value}
-                    </td>
-                  )}
-                </tr>
-              </tfoot>
-            )
-        )}
-      </table>
-    </div>
+      <div className="table-scroll">
+        <label>
+          Show{" "}
+          <select value={entriesPerPage} onChange={handleEntriesPerPageChange}>
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+          </select>{" "}
+          entries
+        </label>
+        <table>
+          <thead>
+            <tr>
+              {headerData.map((header, headerIndex) => (
+                <th key={headerIndex} style={{ textAlign: header.align }}>
+                  {header.value}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {bodyData.slice(startIndex, endIndex).map((row, rowIndex) => (
+              <tr key={rowIndex}>
+                {row.value.map((_, columnIndex) => (
+                  <td
+                    key={columnIndex}
+                    style={{ textAlign: getColumnData(columnIndex).align }}
+                  >
+                    {getColumnData(columnIndex).value[startIndex + rowIndex]}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+          <tfoot>
+            <tr>
+              {footerData.map((footer, footerIndex) => (
+                <th key={footerIndex} style={{ textAlign: footer.align }}>
+                  {footer.value}
+                </th>
+              ))}
+            </tr>
+          </tfoot>
+        </table>
+        <div className="pagination">
+          <button
+            disabled={currentPage === 1}
+            onClick={() => handlePageChange(currentPage - 1)}
+          >
+            Previous
+          </button>
+          <span>
+            Page {currentPage} of {totalPages}
+          </span>
+          <button
+            disabled={currentPage === totalPages}
+            onClick={() => handlePageChange(currentPage + 1)}
+          >
+            Next
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

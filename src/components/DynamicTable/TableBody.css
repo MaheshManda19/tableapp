@@ -1,14 +1,22 @@
 .Table-container {
-  text-align: center;
+  text-align: left; /* Align the table content to the left */
   margin: 20px;
   overflow-x: auto;
+}
+.pagination{
+  padding: 10px;
+  text-align: end;
+}
+button{
+  cursor: pointer;
+  border-radius: 8px;
 }
 
 .table-scroll {
   overflow: auto;
   max-height: 100vh;
   max-width: 100%;
-  cursor:pointer;
+  cursor: pointer;
 }
 
 table {
@@ -25,15 +33,18 @@ th {
   padding: 10px;
   font-weight: bold;
   border: 1px solid #ddd;
+  text-align: center; /* Center align the header cells */
 }
 
 td {
   padding: 10px;
   border: 1px solid #ddd;
+  text-align: center; /* Center align the data cells */
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #4eacd1;
+  color: black;
 }
 
 @media screen and (max-width: 768px) {
@@ -49,4 +60,9 @@ button:hover {
   .table-scroll {
     max-width: 100%;
   }
+}
+.header{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
